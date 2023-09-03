@@ -1,9 +1,9 @@
-import React from 'react';
-import styled from 'styled-components/macro';
+import React from "react";
+import styled from "styled-components/macro";
 
-import { COLORS, WEIGHTS } from '../../constants';
-import { formatPrice, pluralize, isNewShoe } from '../../utils';
-import Spacer from '../Spacer';
+import { COLORS, WEIGHTS } from "../../constants";
+import { formatPrice, pluralize, isNewShoe } from "../../utils";
+import Spacer from "../Spacer";
 
 const ShoeCard = ({
   slug,
@@ -36,14 +36,22 @@ const ShoeCard = ({
       <Wrapper>
         <ImageWrapper>
           <Image alt="" src={imageSrc} />
+          {variant !== "default" ? (
+            <ProductFlag variant={variant}>
+              {variant === "on-sale" ? "Sale" : "Just Released!"}
+            </ProductFlag>
+          ) : null}
         </ImageWrapper>
         <Spacer size={12} />
         <Row>
           <Name>{name}</Name>
-          <Price>{formatPrice(price)}</Price>
+          <Price variant={variant}>{formatPrice(price)}</Price>
         </Row>
         <Row>
-          <ColorInfo>{pluralize('Color', numOfColors)}</ColorInfo>
+          <ColorInfo>{pluralize("Color", numOfColors)}</ColorInfo>{" "}
+          {variant === "on-sale" ? (
+            <SalePrice>{formatPrice(salePrice)}</SalePrice>
+          ) : null}
         </Row>
       </Wrapper>
     </Link>
@@ -53,18 +61,26 @@ const ShoeCard = ({
 const Link = styled.a`
   text-decoration: none;
   color: inherit;
+  flex: 1;
 `;
 
-const Wrapper = styled.article``;
+const Wrapper = styled.article`
+  min-width: 300px;
+`;
+
 
 const ImageWrapper = styled.div`
   position: relative;
 `;
 
-const Image = styled.img``;
+const Image = styled.img`
+  width: 100%;
+`;
 
 const Row = styled.div`
   font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const Name = styled.h3`
@@ -72,10 +88,27 @@ const Name = styled.h3`
   color: ${COLORS.gray[900]};
 `;
 
-const Price = styled.span``;
+const Price = styled.span`
+  text-decoration: ${(p) =>
+    p.variant === "on-sale" ? "line-through" : "none"};
+`;
 
 const ColorInfo = styled.p`
   color: ${COLORS.gray[700]};
+`;
+
+const ProductFlag = styled.span`
+  position: absolute;
+  top: 12px;
+  right: -4px;
+  padding: 8px;
+  background-color: ${(p) =>
+    p.variant === "on-sale"
+      ? COLORS.primary
+      : p.variant === "new-release"
+      ? COLORS.secondary
+      : COLORS.gray[900]};
+  color: ${COLORS.white};
 `;
 
 const SalePrice = styled.span`

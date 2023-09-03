@@ -1,9 +1,9 @@
-import React from 'react';
-import styled from 'styled-components/macro';
+import React from "react";
+import styled from "styled-components/macro";
 
-import { COLORS, WEIGHTS } from '../../constants';
-import Logo from '../Logo';
-import SuperHeader from '../SuperHeader';
+import { COLORS, WEIGHTS } from "../../constants";
+import Logo from "../Logo";
+import SuperHeader from "../SuperHeader";
 
 const Header = () => {
   // Our site features two visual headers, but they should be
@@ -11,27 +11,53 @@ const Header = () => {
   return (
     <header>
       <SuperHeader />
-      <MainHeader>
-        <Logo />
-        <Nav>
-          <NavLink href="/sale">Sale</NavLink>
-          <NavLink href="/new">New&nbsp;Releases</NavLink>
-          <NavLink href="/men">Men</NavLink>
-          <NavLink href="/women">Women</NavLink>
-          <NavLink href="/kids">Kids</NavLink>
-          <NavLink href="/collections">Collections</NavLink>
-        </Nav>
-      </MainHeader>
+      <MainHeaderWrapper>
+        <MainHeader>
+          <LogoWrapper>
+            <Logo />
+          </LogoWrapper>
+          <Nav>
+            <NavLink href="/sale">Sale</NavLink>
+            <NavLink href="/new">New&nbsp;Releases</NavLink>
+            <NavLink href="/men">Men</NavLink>
+            <NavLink href="/women">Women</NavLink>
+            <NavLink href="/kids">Kids</NavLink>
+            <NavLink href="/collections">Collections</NavLink>
+          </Nav>
+        </MainHeader>
+      </MainHeaderWrapper>
     </header>
   );
 };
 
 const MainHeader = styled.div`
   padding: 0 32px;
-  border-bottom: 1px solid ${COLORS.gray[300]};
+  display: flex;
+  align-items: center;
+  padding: 32px 370px;
+  position: relative;
+  min-width: 1440px;
 `;
 
-const Nav = styled.nav``;
+const MainHeaderWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid ${COLORS.gray[300]};
+
+`;
+
+const LogoWrapper = styled.div`
+  position: absolute;
+  left: 32px;
+  top: 32px;
+`;
+
+const Nav = styled.nav`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+`;
 
 const NavLink = styled.a`
   font-size: 1.125rem;
